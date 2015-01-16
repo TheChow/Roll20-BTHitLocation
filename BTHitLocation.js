@@ -133,10 +133,10 @@ var BTHitLocation = {
 
 on("chat:message", function (msg) {
     if (msg.type == "api" && msg.content.indexOf("!Front") !== -1) {
-        sendChat(msg.who, " hit " + BTHitLoc.ShootFront(msg.content.split(' ')[1] || 1));
+        sendChat(msg.who, "Shot to Front/Back arc hit " + BTHitLocation.ShootFront(msg.content.split(' ')[1] || 1));
     } else if (msg.type == "api" && msg.content.indexOf("!Right") !== -1) {
-            sendChat(msg.who, " hit " + BTHitLoc.ShootRight(msg.content.split(' ')[1] || 1));
+            sendChat(msg.who, "Shot to Right arc hit " + BTHitLocation.ShootRight(msg.content.split(' ')[1] || 1));
     } else if (msg.type == "api" && msg.content.indexOf("!Left") !== -1) {
-            sendChat(msg.who, " hit " + BTHitLoc.ShootLeft(msg.content.split(' ')[1] || 1));
+            sendChat(msg.who, "Shot to Left arc hit " + BTHitLocation.ShootLeft(msg.content.split(' ')[1] || 1));
     }
 });

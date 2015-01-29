@@ -1,17 +1,17 @@
 var BTHitLocation = BTHitLocation || (function() {
     var floatingCrit = "Floating Crit";
-    function shootFront(numShots) {
+    function shootFront(numShots, noFloatingCrit) {
         var hitLocs = [];        
         for (var i = 0; i < numShots; i++) {
-            var roll = randomInteger(6) + randomInteger(6);
+            var roll;
+            do {
+                roll = randomInteger(6) + randomInteger(6);
+            } while (noFloatingCrit && roll === 2);
+            
             var loc;
             switch (roll) {
                 case 2:
-                    temp_loc = BTHitLocation.ShootFront(1)[0];
-                    if (temp_loc.indexOf(floatingCrit)>-1){
-                        temp_loc = temp_loc.substring(temp_loc.indexOf(floatingCrit)+floatingCrit.length+1);
-                    }
-                    loc = floatingCrit+" "+temp_loc;
+                    loc = floatingCrit + " " + BTHitLocation.ShootFront(1, true);
                     break;
                 case 3:
                 case 4:
@@ -46,19 +46,18 @@ var BTHitLocation = BTHitLocation || (function() {
         }
         return hitLocs.sort();
     }
-    function shootRear(numShots) {
+    function shootRear(numShots, noFloatingCrit) {
         var hitLocs = [];        
         for (var i = 0; i < numShots; i++) {
-            var roll = randomInteger(6) + randomInteger(6);
+            var roll;            
+            do {
+                roll = randomInteger(6) + randomInteger(6);
+            } while (noFloatingCrit && roll === 2);
+            
             var loc;
             switch (roll) {
                 case 2:
-                    loc = floatingCrit;
-                    do {
-                        loc = BTHitLocation.ShootRear(1);
-                        log("[BTHitLocation.ShootRear]: " + loc);
-                    } while (loc === floatingCrit)                    
-                    loc = floatingCrit + " " + loc;
+                    loc = floatingCrit + " " + BTHitLocation.ShootRear(1, true);
                     break;
                 case 3:
                 case 4:
@@ -94,19 +93,17 @@ var BTHitLocation = BTHitLocation || (function() {
         return hitLocs.sort();
     }
 
-    function shootLeft(numShots) {
+    function shootLeft(numShots, noFloatingCrit) {
         var hitLocs = [];
         for (var i = 0; i < numShots; i++) {
-            var roll = randomInteger(6) + randomInteger(6);
+            var roll;
+            do {
+                roll = randomInteger(6) + randomInteger(6);
+            } while (noFloatingCrit && roll === 2);
             var loc;
             switch (roll) {
                 case 2:
-                    loc = floatingCrit;
-                    do {
-                        loc = BTHitLocation.ShootLeft(1);
-                        log("[BTHitLocation.ShootLeft]: " + loc);
-                    } while (loc === floatingCrit)                    
-                    loc = floatingCrit + " " + loc;
+                    loc = floatingCrit + " " + BTHitLocation.ShootLeft(1, true);
                     break;
                 case 3:
                 case 6:
@@ -142,27 +139,17 @@ var BTHitLocation = BTHitLocation || (function() {
         return hitLocs.sort();
     }
 
-    function shootRight(numShots) {
+    function shootRight(numShots, noFloatingCrit) {
         var hitLocs = [];
-        for (var i = 0; i < numShots; i++) {
-            var isCrit = false;
-            var roll = randomInteger(6) + randomInteger(6);
+        for (var i = 0; i < numShots; i++) {            
             var loc;
+            var roll;
+            do {
+                roll = randomInteger(6) + randomInteger(6);
+            } while (noFloatingCrit && roll === 2)            
             switch (roll) {
-                case 2:
-                    
-                case 3:
-                case 6:
-                case 4:
-                case 5:
-                case 7:
-                case 8:
-                    isCrit = true;
-                    loc = floatingCrit;
-                    do {
-                        loc = BTHitLocation.ShootRight(1);
-                    } while (loc === floatingCrit); 
-                    loc = floatingCrit + " " + loc;
+                case 2:                    
+                    loc = floatingCrit + " " + BTHitLocation.ShootRight(1, true);
                     break;
                 case 3:
                 case 6:
@@ -193,13 +180,7 @@ var BTHitLocation = BTHitLocation || (function() {
                 default:
                     loc = "miss";
             }
-            if (isCrit && loc !== floatingCrit) {
-                hitLocs.push(loc);
-            }
-            else {
-                log("pushed");
-                hitLocs.push(loc);
-            }
+            hitLocs.push(loc);        
         }
         return hitLocs.sort();
     }

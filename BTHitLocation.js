@@ -146,7 +146,7 @@ var BTHitLocation = BTHitLocation || (function() {
             var roll;
             do {
                 roll = randomInteger(6) + randomInteger(6);
-            } while (noFloatingCrit && roll === 2)            
+            } while (noFloatingCrit && roll === 2);     
             switch (roll) {
                 case 2:                    
                     loc = floatingCrit + " " + BTHitLocation.ShootRight(1, true);

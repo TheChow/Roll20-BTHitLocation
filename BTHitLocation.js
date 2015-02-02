@@ -46,6 +46,7 @@ var BTHitLocation = BTHitLocation || (function() {
         }
         return hitLocs.sort();
     }
+
     function shootRear(numShots, noFloatingCrit) {
         var hitLocs = [];        
         for (var i = 0; i < numShots; i++) {
@@ -185,11 +186,124 @@ var BTHitLocation = BTHitLocation || (function() {
         return hitLocs.sort();
     }
     
+    function punchFront(isRear) {
+        var roll = randomInteger(6);
+        var loc;
+        switch (roll) {
+            case 1: 
+                loc = "LA";
+                break;
+            case 2: 
+                loc = "LT";
+                break;
+            case 3: 
+                loc = "CT";
+                break;
+            case 4: 
+                loc = "RT";
+                break;
+            case 5: 
+                loc = "RA";
+                break;
+            case 6: 
+                loc = "HD";
+                break;
+        }
+        
+        return isRear ? loc + "R" : loc;
+    }
+    
+    function punchRear() {
+        return punchFront(true);
+    }
+    
+    function punchLeft() {
+        var roll = randomInteger(6);
+        var loc;
+        switch (roll) {
+            case 1: 
+            case 2: 
+                loc = "LT";
+                break;
+            case 3: 
+                loc = "CT";
+                break;
+            case 4: 
+            case 5: 
+                loc = "LA";
+                break;
+            case 6: 
+                loc = "HD";
+                break;
+        }        
+        return loc;        
+    }
+
+    function punchRight() {
+        var roll = randomInteger(6);
+        var loc;
+        switch (roll) {
+            case 1: 
+            case 2: 
+                loc = "RT";
+                break;
+            case 3: 
+                loc = "CT";
+                break;
+            case 4: 
+            case 5: 
+                loc = "RA";
+                break;
+            case 6: 
+                loc = "HD";
+                break;
+        }        
+        return loc;        
+    }
+    
+    function kickFront(isRear) {
+        var roll = randomInteger(6);
+        var loc;
+        switch (roll) {
+            case 1:
+            case 2:
+            case 3:
+                loc = "RL";
+                break;
+            case 4:
+            case 5:
+            case 6:
+                loc = "LL";
+                break;
+        }
+        return isRear ? loc + "R" : loc;
+    }
+
+    function kickRear() {
+        return kickFront(true);
+    }
+    
+    function kickLeft() {
+        return "LL";
+    }
+    
+    function kickRight() {
+        return "RL";
+    }
+
     return {
         ShootFront: shootFront,
         ShootLeft: shootLeft,
         ShootRight: shootRight,
-        ShootRear: shootRear
+        ShootRear: shootRear,
+        PunchFront: punchFront,
+        PunchRear: punchRear,
+        PunchLeft: punchLeft,
+        PunchRight: punchRight,
+        KickFront: kickFront,
+        KickRear: kickRear,
+        KickLeft: kickLeft, 
+        KickRight: kickRight
     };
 })();
 
@@ -199,8 +313,25 @@ on("chat:message", function (msg) {
     } else if (msg.type == "api" && msg.content.indexOf("!Rear") !== -1) {
         sendChat(msg.who, "Shot to Rear arc hit " + BTHitLocation.ShootRear(msg.content.split(' ')[1] || 1));
     } else if (msg.type == "api" && msg.content.indexOf("!Right") !== -1) {
-            sendChat(msg.who, "Shot to Right arc hit " + BTHitLocation.ShootRight(msg.content.split(' ')[1] || 1));
+        sendChat(msg.who, "Shot to Right arc hit " + BTHitLocation.ShootRight(msg.content.split(' ')[1] || 1));
     } else if (msg.type == "api" && msg.content.indexOf("!Left") !== -1) {
-            sendChat(msg.who, "Shot to Left arc hit " + BTHitLocation.ShootLeft(msg.content.split(' ')[1] || 1));
+        sendChat(msg.who, "Shot to Left arc hit " + BTHitLocation.ShootLeft(msg.content.split(' ')[1] || 1));
+    } else if (msg.type == "api" && msg.content.indexOf("!PFront") !== -1 ) {
+        sendChat(msg.who, "Punch to Front arc hit " + BTHitLocation.PunchFront());
+    } else if (msg.type == "api" && msg.content.indexOf("!PRear") !== -1 ) {
+        sendChat(msg.who, "Punch to Rear arc hit " + BTHitLocation.PunchRear());
+    } else if (msg.type == "api" && msg.content.indexOf("!PLeft") !== -1 ) {
+        sendChat(msg.who, "Punch to Left arc hit " + BTHitLocation.PunchLeft());
+    } else if (msg.type == "api" && msg.content.indexOf("!PRight") !== -1 ) {
+        sendChat(msg.who, "Punch to Right arc hit " + BTHitLocation.PunchRight());
+    } else if (msg.type == "api" && msg.content.indexOf("!KFront") !== -1 ) {
+        sendChat(msg.who, "Kick to Front arc hit " + BTHitLocation.KickFront());
+    } else if (msg.type == "api" && msg.content.indexOf("!KRear") !== -1 ) {
+        sendChat(msg.who, "Kick to Rear arc hit " + BTHitLocation.KickRear());
+    } else if (msg.type == "api" && msg.content.indexOf("!KLeft") !== -1 ) {
+        sendChat(msg.who, "Kick to Left arc hit " + BTHitLocation.KickLeft());
+    } else if (msg.type == "api" && msg.content.indexOf("!KRight") !== -1 ) {
+        sendChat(msg.who, "Kick to Right arc hit " + BTHitLocation.KickRight());
     }
+
 });

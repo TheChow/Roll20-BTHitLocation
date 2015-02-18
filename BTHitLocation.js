@@ -11,7 +11,7 @@ var BTHitLocation = BTHitLocation || (function() {
             var loc;
             switch (roll) {
                 case 2:
-                    loc = floatingCrit + " " + BTHitLocation.ShootFront(1, true);
+                    loc = BTHitLocation.ShootFront(1, true) + " " + floatingCrit;
                     break;
                 case 3:
                 case 4:
@@ -44,7 +44,7 @@ var BTHitLocation = BTHitLocation || (function() {
             }
             hitLocs.push(loc);
         }
-        return hitLocs.sort();
+        return hitLocs;
     }
 
     function shootRear(numShots, noFloatingCrit) {
@@ -58,7 +58,7 @@ var BTHitLocation = BTHitLocation || (function() {
             var loc;
             switch (roll) {
                 case 2:
-                    loc = floatingCrit + " " + BTHitLocation.ShootRear(1, true);
+                    loc = BTHitLocation.ShootRear(1, true) + " " + floatingCrit;
                     break;
                 case 3:
                 case 4:
@@ -91,7 +91,7 @@ var BTHitLocation = BTHitLocation || (function() {
             }
             hitLocs.push(loc);
         }
-        return hitLocs.sort();
+        return hitLocs;
     }
 
     function shootLeft(numShots, noFloatingCrit) {
@@ -104,7 +104,7 @@ var BTHitLocation = BTHitLocation || (function() {
             var loc;
             switch (roll) {
                 case 2:
-                    loc = floatingCrit + " " + BTHitLocation.ShootLeft(1, true);
+                    loc = BTHitLocation.ShootLeft(1, true) + " " + floatingCrit;
                     break;
                 case 3:
                 case 6:
@@ -137,7 +137,7 @@ var BTHitLocation = BTHitLocation || (function() {
             }
             hitLocs.push(loc);
         }
-        return hitLocs.sort();
+        return hitLocs;
     }
 
     function shootRight(numShots, noFloatingCrit) {
@@ -150,7 +150,7 @@ var BTHitLocation = BTHitLocation || (function() {
             } while (noFloatingCrit && roll === 2);     
             switch (roll) {
                 case 2:                    
-                    loc = floatingCrit + " " + BTHitLocation.ShootRight(1, true);
+                    loc = BTHitLocation.ShootRight(1, true) + " " + floatingCrit;
                     break;
                 case 3:
                 case 6:
@@ -183,7 +183,7 @@ var BTHitLocation = BTHitLocation || (function() {
             }
             hitLocs.push(loc);        
         }
-        return hitLocs.sort();
+        return hitLocs;
     }
     
     function punchFront(isRear) {
